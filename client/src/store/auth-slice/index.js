@@ -51,7 +51,7 @@ export const logoutUser = createAsyncThunk(
       }
     );
 
-    return response.data;  
+    return response.data;
   }
 );
 
