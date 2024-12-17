@@ -10,6 +10,7 @@ function ProductFilter({ filters, handleFilter }) {
       <div className="p-4 border-b">
         <h2 className="text-lg font-extrabold">Filters</h2>
       </div>
+      ~
       <div className="p-4 space-y-4">
         {Object.keys(filterOptions).map((keyItem) => (
           <Fragment>
