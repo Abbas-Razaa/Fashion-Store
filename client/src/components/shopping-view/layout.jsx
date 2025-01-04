@@ -13,4 +13,4 @@ function ShoppingLayout() {
   );
 }
 
-export default ShoppingLayout;
+export default ShoppingLayout;  

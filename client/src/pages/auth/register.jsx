@@ -1,5 +1,5 @@
 import CommonForm from "@/components/common/form";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { registerFormControls } from "@/config";
 import { registerUser } from "@/store/auth-slice";
 import { useState } from "react";
@@ -18,7 +18,7 @@ function AuthRegister() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  function onSubmit(event) {
+  function onSubmit(event) { 
     event.preventDefault();
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {

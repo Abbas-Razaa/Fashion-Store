@@ -26,7 +26,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
-  );
+  ); 
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function App() {
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
-        <Route
+        {/* <Route
           path="/"
           element={
             <CheckAuth
@@ -48,7 +48,7 @@ function App() {
               user={user}
             ></CheckAuth>
           }
-        />
+        />  */} 
         <Route
           path="/auth"
           element={
@@ -92,8 +92,8 @@ function App() {
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </div>
+    </div> 
   );
 }
-
+ 
 export default App;

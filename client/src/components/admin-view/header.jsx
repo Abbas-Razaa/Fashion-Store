@@ -27,6 +27,6 @@ function AdminHeader({ setOpen }) {
       </div>
     </header>
   );
-}
+} 
 
 export default AdminHeader;

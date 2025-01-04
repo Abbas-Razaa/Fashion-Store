@@ -6,4 +6,4 @@ function ShoppingHeader() {
   )
 }
 
-export default ShoppingHeader
+export default ShoppingHeader 
