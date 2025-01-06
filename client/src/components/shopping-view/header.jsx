@@ -19,7 +19,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logoutUser } from "@/store/auth-slice";
-// import UserCartWrapper from "./cart-wrapper";
+import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
@@ -96,14 +96,14 @@ function HeaderRightContent() {
           </span>
           <span className="sr-only">User cart</span>
         </Button>
-        {/* <UserCartWrapper
+        <UserCartWrapper
           setOpenCartSheet={setOpenCartSheet}
           cartItems={
             cartItems && cartItems.items && cartItems.items.length > 0
               ? cartItems.items
               : []
           }
-        /> */}
+        />
       </Sheet>
 
       <DropdownMenu>

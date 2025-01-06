@@ -10,7 +10,7 @@ const addToCart = async (req, res) => {
         success: false,
         message: "Invalid data provided!",
       });
-    }
+    } 
 
     const product = await Product.findById(productId);
 
