@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import bannerOne from "../../assets/banner-1.webp";
-import bannerTwo from "../../assets/banner-2.webp";
-import bannerThree from "../../assets/banner-3.webp";
 import {
   Airplay,
   BabyIcon,
@@ -27,15 +24,9 @@ import {
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
-
-const featureImageList = [
-  { id: 1, image: bannerOne },
-  { id: 2, image: bannerTwo },
-  { id: 3, image: bannerThree },
-];
 
 const categoriesWithIcon = [
   { id: "men", label: "Men", icon: ShirtIcon },
@@ -53,15 +44,17 @@ const brandsWithIcon = [
   { id: "zara", label: "Zara", icon: Images },
   { id: "h&m", label: "H&M", icon: Heater },
 ];
-
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const { featureImageList } = useSelector((state) => state.commonFeature);
 
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+
   const { user } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -107,7 +100,7 @@ function ShoppingHome() {
     }, 15000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [featureImageList]);
 
   useEffect(() => {
     dispatch(
@@ -120,19 +113,24 @@ function ShoppingHome() {
 
   console.log(productList, "productList");
 
+  useEffect(() => {
+    dispatch(getFeatureImages());
+  }, [dispatch]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="relative w-full h-[600px] overflow-hidden">
-        {featureImageList.map((slide, index) => (
-          <img
-            src={slide.image}
-            key={slide.id}
-            alt={`Banner ${slide.id}`}
-            className={`${
-              index === currentSlide ? "opacity-100" : "opacity-0"
-            } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
-          />
-        ))}
+        {featureImageList && featureImageList.length > 0
+          ? featureImageList.map((slide, index) => (
+              <img
+                src={slide?.image}
+                key={index}
+                className={`${
+                  index === currentSlide ? "opacity-100" : "opacity-0"
+                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+              />
+            ))
+          : null}
         <Button
           variant="outline"
           size="icon"
@@ -171,7 +169,6 @@ function ShoppingHome() {
                 onClick={() =>
                   handleNavigateToListingPage(categoryItem, "category")
                 }
-                key={categoryItem.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
@@ -191,7 +188,6 @@ function ShoppingHome() {
             {brandsWithIcon.map((brandItem) => (
               <Card
                 onClick={() => handleNavigateToListingPage(brandItem, "brand")}
-                key={brandItem.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
@@ -210,15 +206,15 @@ function ShoppingHome() {
             Feature Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList &&
-              productList.map((productItem) => (
-                <ShoppingProductTile
-                  handleGetProductDetails={handleGetProductDetails}
-                  product={productItem}
-                  handleAddtoCart={handleAddtoCart}
-                  key={productItem.id}
-                />
-              ))}
+            {productList && productList.length > 0
+              ? productList.map((productItem) => (
+                  <ShoppingProductTile
+                    handleGetProductDetails={handleGetProductDetails}
+                    product={productItem}
+                    handleAddtoCart={handleAddtoCart}
+                  />
+                ))
+              : null}
           </div>
         </div>
       </section>
